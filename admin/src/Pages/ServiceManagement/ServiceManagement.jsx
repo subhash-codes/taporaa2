@@ -1,4 +1,4 @@
-// admin/src/Pages/ServiceManagement/ServiceManagement.jsx (ADJUSTED for better flow)
+// admin/src/Pages/ServiceManagement/ServiceManagement.jsx
 
 import React from 'react';
 import AddServices from '../Add/AddServices';
@@ -6,16 +6,22 @@ import ListServices from '../List/ListServices';
 
 function ServiceManagement({ url }) {
     return (
- 
-        <div className='flex flex-col xl:flex-row gap-8 px-8 py-4 items-start w-full'>
+        <div className="flex flex-col xl:flex-row gap-8  p-6 mx-30">
 
-            <div className='flex-shrink-0 w-full xl:w-1/3'>
-                <AddServices url={url} />
+            {/* LEFT SECTION — Add Service */}
+            <div className="">
+                <div className="bg-white w-2xl  shadow-md rounded-xl p-4">
+                    <AddServices url={url} />
+                </div>
             </div>
 
-            <div className='flex-1 w-full xl:w-2/3'>
-                <ListServices url={url} />
+            {/* RIGHT SECTION — List Services */}
+            <div className=" ">
+                <div className="bg-white  w-xl shadow-md rounded-xl p-4 min-h-[300px]">
+                    <ListServices url={url} />
+                </div>
             </div>
+
         </div>
     );
 }

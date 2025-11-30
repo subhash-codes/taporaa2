@@ -1,7 +1,7 @@
 // backend/Routes/serviceRoute.js
 
 import express from "express";
-import {addService, listService, removeService} from "../Controllers/serviceController.js";
+import {addService, listService, removeService,updateService} from "../Controllers/serviceController.js";
 import multer from "multer";
 
 const serviceRouter = express.Router();
@@ -21,6 +21,8 @@ const upload = multer({storage:storage})
 
 serviceRouter.post("/addservice",upload.single("image"), addService);
 serviceRouter.get("/listservice", listService);
-serviceRouter.post("/removeservice", removeService);
+serviceRouter.post("/removeservice/:id", removeService);
+serviceRouter.post("/updateservice", upload.single("image"), updateService);
+
 
 export default serviceRouter;

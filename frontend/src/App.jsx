@@ -10,6 +10,8 @@ import BookService from './pages/BookService'
 import FindGarages from './pages/FindGarages'
 
 const App = () => {
+
+  const url = "http://localhost:4000";
   return (
     <div>
       <Navbar />
@@ -17,7 +19,7 @@ const App = () => {
       
       {/* Sections one after another */}
       <section id="home">
-        <Home />
+        <Home url={url} />
         
       </section>
 

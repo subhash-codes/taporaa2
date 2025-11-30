@@ -2,6 +2,8 @@ import  express  from "express";
 import cors from "cors"
 import { connectDB } from "./Config/db.js";
 import serviceRouter from "./Routes/serviceRout.js";
+import garageRouter from "./Routes/garageRout.js";
+import serviceTypeRouter from "./Routes/serviceTypeRoute.js";
 
 
 import 'dotenv/config'
@@ -24,7 +26,9 @@ connectDB();
 
 // API endpoint
 app.use("/api/services", serviceRouter)
-app.use("/images", express.static('uploads'));
+app.use("/api/garages",garageRouter)
+app.use("/api/servicetypes", serviceTypeRouter);
+app.use("/images", express.static('Uploades'));
 
 
 

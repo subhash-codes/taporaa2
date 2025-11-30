@@ -1,16 +1,14 @@
-// admin/src/Pages/Add/AddServices.jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { assets } from '../../assets/assets';
 
-import React, { useState } from 'react'
-import { assets } from '../../assets/assets'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-
-function AddServices({ url }) {
-
-    const [image, setImage] = useState(false);
+function AddGarages({ url }) {
+    const [image, setImage] = useState(null);
     const [data, setData] = useState({
         name: "",
         description: "",
+        address: ""
     });
 
     const onChangeHandler = (e) => {
@@ -21,43 +19,44 @@ function AddServices({ url }) {
         event.preventDefault();
 
         if (!image) {
-            toast.error("Please upload a service image.");
+            toast.error("Please upload a garage image.");
             return;
         }
 
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("description", data.description);
+        formData.append("address", data.address);
         formData.append("image", image);
 
-        const response = await axios.post(`${url}/api/services/addservice`, formData, {
-            headers: { "Content-Type": "multipart/form-data" }
-        });
+        try {
+            const response = await axios.post(`${url}/api/garages/addgarage`, formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
 
-        if (response.data.success) {
-            setData({ name: "", description: "" });
-            setImage(false);
-            toast.success(response.data.message || "Service added successfully!");
-        } else {
-            toast.error(response.data.message || "Failed to add service.");
+            if (response.data.success) {
+                setData({ name: "", description: "", address: "" });
+                setImage(null);
+                toast.success(response.data.message || "Garage added successfully!");
+            } else {
+                toast.error(response.data.message || "Failed to add garage.");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Server error while adding garage.");
         }
     };
 
     return (
         <div className="p-6 bg-white rounded-xl shadow-lg h-full">
-
             <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
-                ➕ Add New Service
+                ➕ Add New Garage
             </h2>
 
-            {/* FIXED HEIGHT WRAPPER — Only content scrolls */}
             <div className="max-h-[70vh] overflow-y-auto pr-2">
-
-                <form className="flex flex-col gap-6 overflow-y-auto" onSubmit={onSubmitHandler}>
-
-                    {/* Image Upload */}
+                <form className="flex flex-col gap-6" onSubmit={onSubmitHandler}>
                     <div className="flex flex-col gap-2">
-                        <p className="text-gray-700 font-medium">Service Image *</p>
+                        <p className="text-gray-700 font-medium">Garage Image *</p>
                         <label htmlFor="image" className="cursor-pointer">
                             <img
                                 src={image ? URL.createObjectURL(image) : assets.upload_area}
@@ -74,22 +73,20 @@ function AddServices({ url }) {
                         />
                     </div>
 
-                    {/* Name */}
                     <div className="flex flex-col gap-2">
-                        <p className="text-gray-700 font-medium">Service Name *</p>
+                        <p className="text-gray-700 font-medium">Garage Name *</p>
                         <input
                             name="name"
                             value={data.name}
                             onChange={onChangeHandler}
-                            placeholder="Type Service Name Here"
+                            placeholder="Type Garage Name Here"
                             required
                             className="p-3 border border-gray-300 rounded-md"
                         />
                     </div>
 
-                    {/* Description */}
                     <div className="flex flex-col gap-2">
-                        <p className="text-gray-700 font-medium">Service Description *</p>
+                        <p className="text-gray-700 font-medium">Garage Description *</p>
                         <textarea
                             name="description"
                             value={data.description}
@@ -100,18 +97,28 @@ function AddServices({ url }) {
                         ></textarea>
                     </div>
 
-                    {/* Submit */}
+                    <div className="flex flex-col gap-2">
+                        <p className="text-gray-700 font-medium">Garage Address *</p>
+                        <input
+                            name="address"
+                            value={data.address}
+                            onChange={onChangeHandler}
+                            placeholder="Enter full garage address"
+                            required
+                            className="p-3 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         className="bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition w-full"
                     >
-                        ADD SERVICE
+                        ADD GARAGE
                     </button>
                 </form>
-
             </div>
         </div>
     );
 }
 
-export default AddServices;
+export default AddGarages;

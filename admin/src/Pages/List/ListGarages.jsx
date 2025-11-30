@@ -2,103 +2,93 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function ListServices({ url }) {
+function ListGarages({ url }) {
     const [list, setList] = useState([]);
-    const [editingService, setEditingService] = useState(null);
+    const [editingGarage, setEditingGarage] = useState(null);
     const [editData, setEditData] = useState({
         name: "",
         description: "",
+        address: "",
         image: null
     });
 
     const fetchList = async () => {
         try {
-            const response = await axios.get(`${url}/api/services/listservice`);
-            if (response.data.success) {
-                setList(response.data.data);
-            } else {
-                toast.error("Error fetching service list.");
-            }
+            const response = await axios.get(`${url}/api/garages/listgarage`);
+            if (response.data.success) setList(response.data.data);
+            else toast.error("Error fetching garage list.");
         } catch (error) {
-            console.error("Fetch List Error:", error);
-            toast.error("Could not connect to server to fetch services.");
+            console.error(error);
+            toast.error("Server error while fetching garages.");
         }
     };
 
-    const removeService = async (serviceId) => {
+    const removeGarage = async (garageId) => {
         try {
-            const response = await axios.post(`${url}/api/services/removeservice`, {
-                id: serviceId
-            });
-
+            const response = await axios.post(`${url}/api/garages/removegarage/${garageId}`);
             if (response.data.success) {
-                toast.success("Service removed");
+                toast.success("Garage removed");
                 fetchList();
-            } else {
-                toast.error("Could not remove service");
-            }
+            } else toast.error("Could not remove garage");
         } catch (error) {
-            console.error("Remove Error:", error);
-            toast.error("Server error while removing service");
+            console.error(error);
+            toast.error("Server error while removing garage");
         }
     };
 
-    const handleEditClick = (service) => {
-        setEditingService(service);
+    const handleEditClick = (garage) => {
+        setEditingGarage(garage);
         setEditData({
-            name: service.name,
-            description: service.description,
+            name: garage.name,
+            description: garage.description,
+            address: garage.address,
             image: null
         });
     };
 
     const handleUpdate = async () => {
         const formData = new FormData();
-        formData.append("id", editingService._id);
+        formData.append("id", editingGarage._id);
         formData.append("name", editData.name);
         formData.append("description", editData.description);
-
-        if (editData.image) {
-            formData.append("image", editData.image);
-        }
+        formData.append("address", editData.address);
+        if (editData.image) formData.append("image", editData.image);
 
         try {
             const response = await axios.post(
-                `${url}/api/services/updateservice`,formData,{
-                    headers: {"Content-Type": "multipart/form-data"}
-                });
+                `${url}/api/garages/updategarage`,
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
             if (response.data.success) {
-                toast.success("Service updated successfully");
-                setEditingService(null);
+                toast.success("Garage updated successfully");
+                setEditingGarage(null);
                 fetchList();
-            } else {
-                toast.error("Update failed");
-            }
+            } else toast.error("Update failed");
         } catch (error) {
-            console.error("Update Error:", error);
-            toast.error("Server error while updating");
+            console.error(error);
+            toast.error("Server error while updating garage");
         }
     };
 
-    useEffect(() => {
-        fetchList();
-    }, []);
+    useEffect(() => { fetchList(); }, []);
 
     return (
-        <div className='p-8 flex-1 w-lg'>
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">📋 Service List</h2>
+        <div className="p-8 flex-1 w-xl overflow-y-hidden">
+            <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">📋 Garage List</h2>
 
             <div className="grid grid-cols-1 gap-4 overflow-x-auto">
-                <div className='grid grid-cols-6 py-2 px-4 bg-gray-100 font-semibold text-gray-600 rounded-t-lg border-b'>
+                <div className='grid gap-2 grid-cols-8 py-2 px-4 bg-gray-100 font-semibold text-gray-600 rounded-t-lg border-b'>
                     <p>Image</p>
                     <p>Name</p>
                     <p className='col-span-2'>Description</p>
+                    <p>Address</p>
                     <p>Edit</p>
                     <p>Delete</p>
                 </div>
 
                 {list.map((item, index) => (
-                    <div key={index} className='grid grid-cols-6 py-4 px-4 items-center border-b hover:bg-gray-50'>
+                    <div key={index} className='grid grid-cols-8 py-4 px-4 items-center border-b hover:bg-gray-50'>
                         <img
                             src={`${url}/images/${item.image}`}
                             alt={item.name}
@@ -106,6 +96,7 @@ function ListServices({ url }) {
                         />
                         <p className='font-medium text-gray-800'>{item.name}</p>
                         <p className='text-sm text-gray-600 col-span-2 line-clamp-2'>{item.description}</p>
+                        <p className='text-sm text-gray-600'>{item.address}</p>
 
                         <button
                             onClick={() => handleEditClick(item)}
@@ -115,7 +106,7 @@ function ListServices({ url }) {
                         </button>
 
                         <p
-                            onClick={() => removeService(item._id)}
+                            onClick={() => removeGarage(item._id)}
                             className='text-red-600 cursor-pointer font-medium hover:text-red-800'
                         >
                             X
@@ -125,14 +116,14 @@ function ListServices({ url }) {
             </div>
 
             {list.length === 0 && (
-                <p className="text-center text-gray-500 mt-10">No services found. Please add a new service.</p>
+                <p className="text-center text-gray-500 mt-10">No garages found. Please add a new garage.</p>
             )}
 
             {/* EDIT MODAL */}
-            {editingService && (
+            {editingGarage && (
                 <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
-                        <h2 className="text-xl font-semibold mb-4">Edit Service</h2>
+                        <h2 className="text-xl font-semibold mb-4">Edit Garage</h2>
 
                         <label className="block mb-2">Name:</label>
                         <input
@@ -149,6 +140,14 @@ function ListServices({ url }) {
                             className="w-full p-2 border rounded mb-3"
                         />
 
+                        <label className="block mb-2">Address:</label>
+                        <input
+                            type="text"
+                            value={editData.address}
+                            onChange={(e) => setEditData({ ...editData, address: e.target.value })}
+                            className="w-full p-2 border rounded mb-3"
+                        />
+
                         <label className="block mb-2">Image (Optional):</label>
                         <input
                             type="file"
@@ -158,7 +157,7 @@ function ListServices({ url }) {
 
                         <div className="flex justify-end gap-3 mt-4">
                             <button
-                                onClick={() => setEditingService(null)}
+                                onClick={() => setEditingGarage(null)}
                                 className="px-4 py-2 bg-gray-400 text-white rounded cursor-pointer"
                             >
                                 Cancel
@@ -174,9 +173,8 @@ function ListServices({ url }) {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
 
-export default ListServices;
+export default ListGarages;
