@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { SquarePen } from "lucide-react";
 
 function ListGarages({ url }) {
     const [list, setList] = useState([]);
@@ -74,17 +75,17 @@ function ListGarages({ url }) {
     useEffect(() => { fetchList(); }, []);
 
     return (
-        <div className="p-8 flex-1 w-xl overflow-y-hidden">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">📋 Garage List</h2>
+        <div className="p-4 bg-white rounded-lg shadow-md h-full">
+            <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">📋 Garage List</h2>
 
             <div className="grid grid-cols-1 gap-4 overflow-x-auto">
                 <div className='grid gap-2 grid-cols-8 py-2 px-4 bg-gray-100 font-semibold text-gray-600 rounded-t-lg border-b'>
                     <p>Image</p>
                     <p>Name</p>
                     <p className='col-span-2'>Description</p>
-                    <p>Address</p>
-                    <p>Edit</p>
-                    <p>Delete</p>
+                    <p className='ml-2'>Address</p>
+                    <p className='ml-7'>Edit</p>
+                    <p className='ml-7'>Delete</p>
                 </div>
 
                 {list.map((item, index) => (
@@ -96,18 +97,18 @@ function ListGarages({ url }) {
                         />
                         <p className='font-medium text-gray-800'>{item.name}</p>
                         <p className='text-sm text-gray-600 col-span-2 line-clamp-2'>{item.description}</p>
-                        <p className='text-sm text-gray-600'>{item.address}</p>
+                        <p className='text-sm text-gray-600 ml-4'>{item.address}</p>
 
                         <button
                             onClick={() => handleEditClick(item)}
-                            className='text-blue-600 font-medium hover:text-blue-800 cursor-pointer'
+                            className='text-green-600 font-medium hover:text-green-800 cursor-pointer ml-8'
                         >
-                            Edit
+                            <SquarePen />
                         </button>
 
                         <p
                             onClick={() => removeGarage(item._id)}
-                            className='text-red-600 cursor-pointer font-medium hover:text-red-800'
+                            className='text-red-600 cursor-pointer font-medium hover:text-red-800 ml-12'
                         >
                             X
                         </p>

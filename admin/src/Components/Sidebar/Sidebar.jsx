@@ -23,7 +23,7 @@ const Sidebar = () => {
 
   return (
 
-    <div className="w-48 min-h-screen bg-gray-900 border-r-2 fixed border-gray-700 p-4 pt-8">
+    <div className="w-48 h-[90vh] bg-gray-900 border-r-2 border-gray-700 p-4 pt-8">
 
       <div className="mb-8 flex flex-col items-center">
         <img className='h-8 mb-2' src={assets.logo} alt="Taporaa Logo" style={{ filter: 'brightness(0) invert(1)' }} />

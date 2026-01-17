@@ -33,8 +33,6 @@ const listService = async (req, res) => {
 
 }
 
-// remove service item
-
 // remove service item (updated to use URL param)
 const removeService = async (req, res) => {
     try {

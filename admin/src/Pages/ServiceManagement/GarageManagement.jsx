@@ -1,28 +1,16 @@
-// admin/src/Pages/ServiceManagement/ServiceManagement.jsx
-
-import React from 'react';
 import AddGarages from '../Add/AddGarages';
 import ListGarages from '../List/ListGarages';
 
 function GarageManagement({ url }) {
     return (
-        <div className="flex flex-col xl:flex-row gap-8  p-6 mx-30">
-
-            {/* LEFT SECTION — Add Service */}
-            <div className="">
-                <div className="bg-white w-xl  shadow-md rounded-xl p-4">
-                    <AddGarages url={url} />
-                </div>
-            </div>
-
-            {/* RIGHT SECTION — List Services */}
-            <div className=" mx-10">
-                <div className="bg-white border shadow-md rounded-xl p-4 min-h-[300px]">
-                    <ListGarages url={url} />
-                </div>
-            </div>
-
+         <div className=' h-[80vh] flex justify-between gap-4'>
+        <div className="w-1/2 ">
+            <AddGarages url={url} />
         </div>
+        <div className="w-1/2">
+            <ListGarages url={url} />
+        </div>
+       </div>
     );
 }
 

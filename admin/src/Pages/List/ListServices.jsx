@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { SquarePen } from "lucide-react";
 
 function ListServices({ url }) {
     const [list, setList] = useState([]);
@@ -64,9 +65,9 @@ function ListServices({ url }) {
 
         try {
             const response = await axios.post(
-                `${url}/api/services/updateservice`,formData,{
-                    headers: {"Content-Type": "multipart/form-data"}
-                });
+                `${url}/api/services/updateservice`, formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
             if (response.data.success) {
                 toast.success("Service updated successfully");
                 setEditingService(null);
@@ -82,18 +83,22 @@ function ListServices({ url }) {
 
     useEffect(() => {
         fetchList();
+        const interval = setInterval(() => {
+            fetchList();
+        }, 5000);
+
+        return () => clearInterval(interval);
     }, []);
 
     return (
-        <div className='p-8 flex-1 w-lg '>
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">📋 Service List</h2>
-
+        <div className="p-4 bg-white rounded-lg shadow-md h-full">
+            <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">📋 Service List</h2>
             <div className="grid grid-cols-1 gap-4 overflow-x-auto">
                 <div className='grid grid-cols-6 py-2 px-4 bg-gray-100 font-semibold text-gray-600 rounded-t-lg border-b'>
                     <p>Image</p>
                     <p>Name</p>
                     <p className='col-span-2'>Description</p>
-                    <p>Edit</p>
+                    <p className='ml-7'>Edit</p>
                     <p>Delete</p>
                 </div>
 
@@ -109,14 +114,14 @@ function ListServices({ url }) {
 
                         <button
                             onClick={() => handleEditClick(item)}
-                            className='text-blue-600 font-medium hover:text-blue-800 cursor-pointer'
+                            className='text-blue-600 font-medium hover:text-blue-800 cursor-pointer ml-7'
                         >
-                            Edit
+                            <SquarePen />
                         </button>
 
                         <p
                             onClick={() => removeService(item._id)}
-                            className='text-red-600 cursor-pointer font-medium hover:text-red-800'
+                            className='text-red-600 cursor-pointer font-medium hover:text-red-800 ml-5'
                         >
                             X
                         </p>
@@ -174,6 +179,8 @@ function ListServices({ url }) {
                     </div>
                 </div>
             )}
+
+
 
         </div>
     );

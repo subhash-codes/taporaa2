@@ -39,7 +39,7 @@ function AddServiceType({ url }) {
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-lg h-full">
+    <div className="p-4 bg-white rounded-xl shadow-lg h-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
         ➕ Add New Service-Type
       </h2>
