@@ -1,5 +1,3 @@
-// admin/src/Pages/Add/AddServices.jsx
-
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 import axios from 'axios'
@@ -19,7 +17,6 @@ function AddServices({ url }) {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-
         if (!image) {
             toast.error("Please upload a service image.");
             return;
@@ -44,18 +41,17 @@ function AddServices({ url }) {
     };
 
     return (
-        <div className="p-6 bg-white rounded-xl shadow-lg h-full">
+        <div className="p-6 bg-gray-900 rounded-xl fixed w-[40vw] shadow-lg h-full">
 
             <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
                 ➕ Add New Service
             </h2>
 
             {/* FIXED HEIGHT WRAPPER — Only content scrolls */}
-            <div className="max-h-[70vh] overflow-y-auto pr-2">
+            <div className="max-h-[70vh]  pr-2">
 
-                <form className="flex flex-col gap-6 overflow-y-auto" onSubmit={onSubmitHandler}>
+                <form className="flex flex-col gap-6 " onSubmit={onSubmitHandler}>
 
-                    {/* Image Upload */}
                     <div className="flex flex-col gap-2">
                         <p className="text-gray-700 font-medium">Service Image *</p>
                         <label htmlFor="image" className="cursor-pointer">
@@ -74,7 +70,6 @@ function AddServices({ url }) {
                         />
                     </div>
 
-                    {/* Name */}
                     <div className="flex flex-col gap-2">
                         <p className="text-gray-700 font-medium">Service Name *</p>
                         <input
@@ -87,7 +82,6 @@ function AddServices({ url }) {
                         />
                     </div>
 
-                    {/* Description */}
                     <div className="flex flex-col gap-2">
                         <p className="text-gray-700 font-medium">Service Description *</p>
                         <textarea
@@ -100,7 +94,6 @@ function AddServices({ url }) {
                         ></textarea>
                     </div>
 
-                    {/* Submit */}
                     <button
                         type="submit"
                         className="bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition w-full"

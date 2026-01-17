@@ -85,7 +85,7 @@ function ListServices({ url }) {
     }, []);
 
     return (
-        <div className='p-8 flex-1 w-lg'>
+        <div className='p-8 flex-1 w-lg '>
             <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">📋 Service List</h2>
 
             <div className="grid grid-cols-1 gap-4 overflow-x-auto">

@@ -35,14 +35,17 @@ const ContactUs = () => {
 
   return (
 
-    
+
     <div className="mx-[10%] mb-20">
-       <Section 
-    title="Contact Us" 
-    description="We provide top-notch services with a commitment to quality and customer satisfaction."  />
-      <div className="flex gap-16 flex-col lg:flex-row min-h-screen shadow-2xl transition-all duration-300 transform  overflow-hidden">
+      <Section
+        title="Contact Us"
+        description="We provide top-notch services with a commitment to quality and customer satisfaction." />
+    
+      <div className="flex flex-col gap-2 lg:flex-row md:h-screen shadow-2xl transition-all duration-300 transform  overflow-hidden rounded-xl">
+
+
         {/* Map Section */}
-        <div className="w-full lg:w-1/2 h-80 lg:h-auto border-2 border-gray-100">
+        <div className="hidden lg:block w-full lg:w-1/2 h-80 lg:h-auto border-gray-100 rounded-xl overflow-hidden">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.076840748135!2d144.9630578153298!3d-37.81362797975191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0x600b65f7c5e53e0!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sin!4v1678229891234!5m2!1sen!2sin"
             width="100%"
@@ -56,13 +59,16 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Form Section */}
-        <div className="w-full  lg:w-1/2 p-8 md:p-12  flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-4">
-            Get in Touch
-          </h2>
-          <p className="text-center text-gray-600 mb-8">
-            We'd love to hear from you. Please fill out the form below.
-          </p>
+        <div className="w-full lg:w-1/2 p-2  md:p-12 md:pt-0  flex flex-col justify-center">
+          <div className='hidden md:block'>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-center text-white mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-center text-gray-600 mb-8">
+              We'd love to hear from you. Please fill out the form below.
+            </p>
+          </div>
+
 
           {messageSent && (
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-6" role="alert">
@@ -72,8 +78,8 @@ const ContactUs = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+            <div className="grid  md:grid-cols-2 gap-6">
+              <div >
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                   Full Name
                 </label>

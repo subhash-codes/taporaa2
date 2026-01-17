@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ServiceManagement from './Pages/ServiceManagement/ServiceManagement'
 import GarageManagement from './Pages/ServiceManagement/GarageManagement'
 import ServiceTypeManagement from './Pages/ServiceManagement/ServiceTypeManagement'
+import AddServices from './Pages/Add/AddServices';
 const App = () => {
     const url = "http://localhost:4000"
     return (
@@ -21,10 +22,11 @@ const App = () => {
                 <Sidebar />
                 <div className='flex-1  p-15'>
                     <Routes>
-                        <Route path='/services' element={<ServiceManagement url={url} />} ></Route>
+                        {/* <Route path='/services' element={<ServiceManagement url={url} />} ></Route> */}
                         <Route path='/dashboard' element={<div>Dashboard</div>} ></Route>
                         <Route path='/garages' element={<GarageManagement url={url}/>} ></Route>
                         <Route path='/orders' element={<ServiceTypeManagement url={url}/>} ></Route>
+                        <Route path='/services' element={<AddServices url={url}/>}/>
                     </Routes>
                 </div>
             </div>
